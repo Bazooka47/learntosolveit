@@ -3,28 +3,43 @@
    Use the same tab stops as for detab.
 */
 #include<stdio.h>
-#define TABINC 8
-
-int main(void)
+#define TAB 8//default length tabstops takes
+void main(void)
 {
-	int nb,nt,pos,c;
-	
-	nb = 0;
-	nt = 0;
-	
-	for(pos=1;(c=getchar())!=EOF;++pos)
-		if( c == ' ')
+	int c,sp=0,tb=0;
+	while((c=getchar())!=EOF)
+	{
+		if(c==' ')
 		{
-			if((pos % TABINC) != 0)
-				++nb;
-			else
-			{
-				nb = 0;
-				++nt;
-			}
+			++sp;//increments while c=' '
 		}
-		else 
+		else //c!=' ',but sp has previous values
 		{
+                      if(sp==1)
+			putchar(' ');
+		      else if (sp>1)
+			{				
+					tb=sp/TAB;//(int/int)will be truncated thus when sp>tab then tb>0
+					
+				sp=sp-tb*TAB; //finding net blanks
+				while(tb>0)
+			{
+				putchar('\t');
+				--tb;
+			}
+			while(sp>0)
+			{
+				putchar('*');
+				--sp;
+			}
+			}
+		putchar(c);
+		sp=0;
+		}
+	}
+}
+			
+		
 			for( ; nt > 0 ; --nt)
 				putchar('\t');
 			if( c == '\t')
